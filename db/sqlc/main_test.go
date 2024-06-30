@@ -17,6 +17,7 @@ const (
 
 // sqlc로 생성된 트랜잭션을 가져와서 관련 테스트를 초기화하고 관리합니다.
 var testQueries *Queries
+var testDB *sql.DB
 
 func TestMain(m *testing.M) {
 
@@ -30,14 +31,14 @@ func TestMain(m *testing.M) {
 	dbSource := os.Getenv("DB_SOURCE")
 
 	// database/sql 라이브러리를 통해 DB 커넥션을 생성
-	conn, err := sql.Open(dbDriver, dbSource)
+	testDB, err = sql.Open(dbDriver, dbSource)
 
 	if err != nil {
 		log.Fatal("cannot connect to db:", err)
 	}
 
 	// 커넥션이 생성되면 해당 커넥션을 SQLC 드라이버와 연동함.
-	testQueries = New(conn)
+	testQueries = New(testDB)
 
 	// Test 시작
 	os.Exit(m.Run())
