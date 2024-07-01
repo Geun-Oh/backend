@@ -18,6 +18,7 @@ const (
 // sqlc로 생성된 트랜잭션을 가져와서 관련 테스트를 초기화하고 관리합니다.
 var testQueries *Queries
 var testDB *sql.DB
+var testStore *Store
 
 func TestMain(m *testing.M) {
 
@@ -39,6 +40,8 @@ func TestMain(m *testing.M) {
 
 	// 커넥션이 생성되면 해당 커넥션을 SQLC 드라이버와 연동함.
 	testQueries = New(testDB)
+
+	testStore = NewStore(testDB)
 
 	// Test 시작
 	os.Exit(m.Run())
