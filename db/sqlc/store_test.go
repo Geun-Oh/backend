@@ -113,6 +113,7 @@ func TestTransferTx(t *testing.T) {
 	require.Equal(t, account2.Balance+int64(n)*amount, updatedAccount2.Balance)
 }
 
+// 해당 테스트는 로직 실행 보다는 데드락 발생 여부만 확인하면 됨.
 func TestTransferTxDeadlock(t *testing.T) {
 
 	account1 := createRandomAccount(t)
