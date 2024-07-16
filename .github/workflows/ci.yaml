@@ -48,7 +48,11 @@ jobs:
       - name: Run migrations
         run: make migrateup
 
+      - name: Right down .env file
+        run: |
+          touch .env
+          echo DB_SOURCE="user=root password=secret dbname=postgres host=localhost port=5432 sslmode=disable" >> .env
+          cat .env
+
       - name: Test
         run: make test
-        env:
-          DB_SOURCE: "user=root password=secret dbname=postgres host=localhost port=5432 sslmode=disable"
